@@ -1,10 +1,10 @@
 <?php
-namespace mediamanage;
+namespace magazine;
 use think\Request;
 
-defined('MEDIAMANAGE_VIEW_PATH') or define('MEDIAMANAGE_VIEW_PATH', __DIR__ . DS.'view'. DS);
-defined('MEDIAMANAGE_DIR') or define('MEDIAMANAGE_DIR',__DIR__. DS);
-defined('MEDIAMANAGE_STYLE_PATH') or define('MEDIAMANAGE_STYLE_PATH', '/public/static/mediamanage/webuploader-0.1.5/');
+defined('MAGAZINE_VIEW_PATH') or define('MAGAZINE_VIEW_PATH', __DIR__ . DS.'view'. DS);
+defined('MAGAZINE_DIR') or define('MAGAZINE_DIR',__DIR__. DS);
+
 class Base {
 	
 	public function __construct()
@@ -25,7 +25,7 @@ class Base {
 	 * @return mixed
 	 */
 	public function autoload($controller,$action){
-		$className = '\\mediamanage\\controller\\'.$controller;
+		$className = '\\magazine\\controller\\'.$controller;
 		
 		$controller = new $className($this->request);
 
