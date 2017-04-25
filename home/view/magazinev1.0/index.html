@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>平证牛事通</title>
+    <base href="http://192.168.13.191:8094/magazinev1.0/">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css?v=36" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script>
+        $(function() {
+            setRem();
+            window.addEventListener('orientationchange', setRem);
+            window.addEventListener('resize', setRem);
+            function setRem() {
+                var html = document.querySelector('html');
+                var width = html.getBoundingClientRect().width;
+                html.style.fontSize = width / 20 + 'px';
+            }
+            var navH = parseInt($('.magazine-nav').css('height'));
+            var ScreenH = parseInt($('body').css('height'))-navH;
+            $(".news-detail").attr('style', 'height:'+ScreenH+'px');
+            $('#page6 .body').attr('style', 'height:'+ScreenH+'px');
+        })
+    </script>
+
+</head>
+<body>
+<!-- 首页杂志栏 -->
+<div class="index-mask" id="index-mask" data-role="popup">
+    <div class="index-mask-left psa"></div>
+    <div class="index-mask-right psa"></div>
+    <div class="loader">
+        <div class="loader-inner ball-clip-rotate-pulse">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span class="mask-tips psa">请稍后...</span>
+</div>
+<div class="magazine-index page1" id="page1" data-role="page">
+    <div class="magazine-shelf-top psa"><img src="images/shelf.png" /></div>
+    <div class="magazine-shelf-bottom psa"><img src="images/shelf.png" /></div>
+    <div class="index-arrow-left psa" style="display:none;"><img src="images/index-arrow-left.png" alt="" /></div>
+    <div class="index-arrow-right psa"><img src="images/index-arrow-right.png" alt="" /></div>
+    <!-- 数据1 -->
+    <div class="magezine-con1 magezine-new psa data_1" >
+        {volist name="list" id="vo" offset="0" length="1" empty="没有数据"}
+        <div class="loader psa" data-id="{$vo.id}" style="z-index:20;" >
+            <div class="loader-inner ball-scale-multiple">
+                <div></div>
+                <div></div>
+                <div></div>
+                <span></span>
+            </div>
+        </div>
+        <a href="#page2" data-transition="flip" onclick="setMagazineId({$vo.id},'{$vo.thumb}');">
+            <div class="book-cover psa"><img data="images/book.png" src="{$vo.thumb}" /></div>
+            <div class="magazine-icon-new psa"><img src="images/magazine-icon-new.png" /></div>
+        </a>
+        {/volist}
+    </div>
+
+    <!-- 数据2 -->
+    {volist name="list" id="vo" offset="1" length="1" empty="<div class='index-flower psa'><img src='images/index-flower.png' /></div><div class='magezine-empty psa data_2'><div class='magazine-empty psa '><img src='images/cover-empty.png'/></div><span class='magazine-empty-tips psa'>敬请<br />期待</span></div><div class='index-robot psa'><img src='images/index-Robot.png' /></div>"}
+
+    <!-- 有数据则使用 -->
+    <!-- <div class="index-flower psa"><img src="images/index-flower.png" /></div>
+    <div class="magezine-empty psa">
+        <div class="magazine-empty psa"><img src="images/cover-empty.png"  /></div>
+        <span class="magazine-empty-tips psa">敬请<br />期待</span>
+    </div>
+    <div class="index-robot psa"><img src="images/index-Robot.png" /></div> -->
+    {/volist}
+</div>
+<input type="hidden" value="0" id="id_value"/>
+<input type="hidden" value="0" id="page_index_value"/>
+<input type="hidden" value="1" id="page_list_2_value"/>
+<!-- 头条封面 -->
+<div class="page2 wrapper" id="page2" data-role="page">
+    <div class="magazine-cover-fullpage">
+        <div class="loader psa" style="z-index:20;" >
+            <div class="loader-inner ball-scale-multiple">
+                <div></div>
+                <div></div>
+                <div></div>
+                <span></span>
+            </div>
+        </div>
+        <img src="images/Cover-fullpage.png"/></div>
+    <div class="magazine-nav">
+        <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+        <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+        <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+        <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+    </div>
+    <div class="news-detail psa">
+
+    </div>
+</div>
+<!-- 精选列表 -->
+<div class="page3" id="page3" data-role="page">
+    <div class="magazine-nav">
+        <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+        <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+        <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+        <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+    </div>
+    <div id="wrapper" class="wrapper">
+        <div class="high-quality-news-container"  id="scroller">
+            <div id="pullDown">
+                <span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+            </div>
+            <ul id="thelist">
+            </ul>
+            <div id="pullUp">
+                <span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 知证 -->
+<div class="page4" id="page4" data-role="page">
+    <div class="magazine-nav">
+        <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+        <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+        <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+        <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+    </div>
+    <div class="news-detail psa">
+
+    </div>
+</div>
+<!-- 轻松 -->
+<div class="page5" id="page5" data-role="page">
+    <div class="magazine-nav">
+        <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+        <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+        <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+        <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+    </div>
+    <div class="news-detail psa">
+
+    </div>
+</div>
+
+<!-- 精选文章点击详情 -->
+<div class="page6" id="page6" data-role="page">
+    <div class="magazine-nav">
+        <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+        <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+        <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+        <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+    </div>
+    <div class="news-detail psa">
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var myScroll,
+        pullDownEl, pullDownOffset,
+        pullUpEl, pullUpOffset,
+        generatedCount = 0;
+
+    // 加载完成
+    function loadOver(){
+        $('.index-mask .loader').animate({"opacity":"0"},2000, function() {
+            $(".mask-tips").attr('style', 'display:none');
+            $('.index-mask-left').animate({"left":"-50%"},1500);
+            $('.index-mask-right').animate({"right":"-50%"},1500,function() {
+                $('.index-mask').attr("style","display:none");
+            });
+        })
+
+    }
+
+    // 首页左按钮点击
+    $('#page1 .index-arrow-left').click(function(event) {
+        getIndexMore('prev');
+    });
+    // 首页右按钮点击
+    $('#page1 .index-arrow-right').click(function(event) {
+        getIndexMore('next');
+
+    });
+    //pageinit
+    $(document).on("pageinit","#page2",function(){
+        $('.nav-con').click(function(event) {
+            $('.nav-con').removeClass('active');
+            $(this).addClass('active')
+        });
+        $('.magazine-cover-fullpage').click(function(event) {
+            $(this).attr('style', 'display:none');
+        });
+    });
+
+    //page2 传参桥梁
+    function setMagazineId(id,thumb){
+        //alert(id);
+        //alert(thumb)
+        //设置id
+        $("#id_value").val(id);
+        //设置封面
+        $("#page2 .magazine-cover-fullpage").find("img").attr("src",thumb);
+        //根据id获取内容
+        //点击封面Page2显示封面大图
+        $('.magazine-cover-fullpage').attr('style', 'display:block;background:#fff;'); //
+
+    }
+
+
+    $(document).on("pageshow","#page2",function(e,d){
+
+        var id =$("#id_value").val();
+        if(id==0){window.location.href='http://pznst.wmting.com/magazine/?tid=3';return false;}
+        $("#page2").attr("data-id",id);
+        var cid = 1;
+        getListSub(id,cid,0,1);
+
+        $('.nav-con').removeClass('active');
+        $('.nav-con1').addClass('active');
+
+    });
+
+    $(document).on("pageshow","#page3",function(){
+
+        //目录2 精选
+        var id = $("#id_value").val();
+        if(id==0){window.location.href='http://192.168.13.191:8094/index.php/magazine/?tid=3';return false;}
+        $("#page3").attr("data-id",id);
+        var cid = 2;
+        getListSub(id,cid,1,1);
+
+        $('.nav-con').removeClass('active');
+        $('.nav-con2').addClass('active');
+
+    });
+    $(document).on("pageshow","#page4",function(){
+        //目录3  知证
+        var id = $("#id_value").val();
+        if(id==0){window.location.href='http://192.168.13.191:8094/index.php/magazine/?tid=3';return false;}
+        $("#page4").attr("data-id",id);
+        var cid = 3;
+        getListSub(id,cid,0,1);
+
+        $('.nav-con').removeClass('active');
+        $('.nav-con3').addClass('active');
+    });
+    $(document).on("pageshow","#page5",function(){
+        //目录4  轻松
+        var id = $("#id_value").val();
+        if(id==0){window.location.href='http://192.168.13.191:8094/index.php/magazine/?tid=3';return false;}
+        $("#page5").attr("data-id",id);
+        var cid = 4;
+        getListSub(id,cid,0,1);
+
+        $('.nav-con').removeClass('active');
+        $('.nav-con4').addClass('active');
+    });
+
+    $(document).on("pagebeforeshow","#page6",function(event,data){
+        //文章内容
+        //$('#page6 iframe').attr('src', 'https://mp.weixin.qq.com/s?__biz=MzI3NzU3MDk3OQ==&mid=100000494&idx=1&sn=542e98df973a60ab26dfa2898fa35dce&chksm=6b6576225c12ff3479cf0add42ab536f62ad845454a653e87a8a8859eaa417e9293ad41a5c0f&mpshare=1&scene=1&srcid=0331g3MvZKtPWq7giF4iAjwy&pass_ticket=ebLnXtm5W3RE4GDrukxoGdMvHh7ARy1pLhyn2kR%2B%2Fd8%3D#rd');
+
+    });
+
+    //首页 获取更多  期刊  type = next | prev
+    function getIndexMore(type="next"){
+        loadStart('加载中...','a',true);
+        var tid = {$tid};
+        var page = parseInt( $("#page_index_value").val() );
+        //设置页码
+        if(type=="next"){
+            page = page + 1;
+            $("#page_index_value").val( page );
+            if( $("#page_index_value").val()>0 ){
+                $('#page1 .index-arrow-left').attr("style","display:block;");
+            }
+        }else{
+            page = page - 1;
+            $("#page_index_value").val( page );
+            if( $("#page_index_value").val()==0 ){
+                $('#page1 .index-arrow-left').attr("style","display:none;");
+            }
+        }
+        var url = 'http://192.168.13.191:8094/index.php/magazine/index/lists?tid='+tid+'&j=1&p='+page;
+        $.get(url, function(json){
+            var list =  eval("("+json.list+")") ;
+            if(json.code==1){
+
+                //如果 list 为空
+                if($.isEmptyObject(list)){
+
+                    $('#page1 .index-arrow-right').attr('style','display:none;');
+                    var html = "<div class='magazine-empty psa '><img src='images/cover-empty.png'/></div><span class='magazine-empty-tips psa'>没有<br />更多</span>";
+                    $(".data_2").html(html);
+                }
+
+                //替换内容1
+                if(list[0]){
+                    if( !list[0].thumb ){
+                        list[0].thumb = 'images/book.png';
+                    }
+                    var html = '';
+                    html += '<div class="loader psa" data-id="'+list[0].id+'" style="z-index:20;" u >';
+                    html += '    <div class="loader-inner ball-scale-multiple">';
+                    html += '        <div></div>';
+                    html += '        <div></div>';
+                    html += '        <div></div>';
+                    html += '        <span></span>';
+                    html += '    </div>';
+                    html += '</div>';
+                    html += '<a href="#page2" data-transition="flip" onclick="setMagazineId('+list[0].id+',\''+list[0].thumb+'\');">';
+                    html += '    <div class="book-cover psa"><img data="images/book.png" src="'+list[0].thumb+'" /></div>';
+                    if(page==0){
+                        html += '    <div class="magazine-icon-new psa"><img src="images/magazine-icon-new.png" /></div> ';
+                    }
+                    html += '</a>';
+                    $(".data_1").html(html);
+                }
+                //替换内容2
+                if(list[1]){
+                    if( !list[1].thumb ){
+                        list[1].thumb = 'images/cover-empty.png';
+                    }
+                    var html = '';
+                    html += '<a href="#page2" data-transition="flip" onclick="setMagazineId('+list[1].id+',\''+list[1].thumb+'\');"><div class="magazine-empty psa"><img data="" src="'+list[1].thumb+'"></div></a>';
+                    $(".data_2").html(html);
+                }else{
+                    //如没有内容则表示是  首页 或者  没有更多
+                    if(page==0){
+                        $('#page1 .index-arrow-right').attr('style','display:block;');
+                        var html = "<div class='magazine-empty psa '><img src='images/cover-empty.png'/></div><span class='magazine-empty-tips psa'>敬请<br />期待</span>";
+                        $(".data_2").html(html);
+                    }
+                }
+
+                loadStop();
+                myScroll.refresh();
+
+            }
+
+
+        });
+    }
+
+
+    //获取期刊内容列表
+    function getListSub(id,cid,append,page){
+        loadStart('加载中...','a',true);
+        if(cid==0){
+            cid = 1;
+        }
+
+        if(page>0){
+           var p = '&p='+page;
+        }else{
+            var p ='';
+        }
+        // onclick="getArticle('+list[k].id+')"
+        var url = 'http://192.168.13.191:8094/index.php/magazine/index/listsub?id='+id+'&cid='+cid+'&j=1' + p;
+        $.get(url, function(json){
+            if(json.code==1){
+                switch (cid) {
+                    case 1:
+                        //var list =  eval("("+json.list+")") ;
+                        //$('#page2 .title').html(list[0].title);
+                        //$('#page2 .body').html( list[0].body );
+                        var list =  eval("("+json.list+")") ;
+                        if(!$.isEmptyObject(list)){
+                            var html = '<span class="news-from inaline">平证牛事通</span>';
+                            html +='<span class="news-title title">'+list[0].title+'</span>';
+                            html +='<span class="news-author">文/平证牛事通</span> ';
+                            html +='<div class="body">'+list[0].body+'</div>';
+                            $('#page2 .news-detail').html(html);
+                        }
+
+                        loadStop();
+                        myScroll.refresh();
+                        break;
+                    case 2:
+                        var html = '';
+                        var list =  eval("("+json.list+")") ;
+                        for(var k in list){
+
+                            if(list[k].gourl!=''){
+                                var href = list[k].gourl;
+                                var clickstr = 'target="_blank" onclick="updateArticleClikeNum('+list[k].id+')"';
+                            }else{
+                                var href ='#page6';
+                                var clickstr = ' onclick="getArticle('+list[k].id+');"';
+                            }
+                            var datearr = list[k].date.split("/");
+                            html +='        <li class="news-box">';
+                            html +='            <a href="'+href+'" '+clickstr+' data-aid="'+list[k].id+'">';
+                            html +='                <!-- 新闻事件 -->';
+                            html +='                <div class="news-date psa">';
+                            html +='                    <span class="news-date-month">'+datearr[0]+'</span>';
+                            html +='                    <span class="news-date-day">'+datearr[1]+'</span>';
+                            html +='                </div>';
+                            html +='                <div class="news-title inaline title">'+list[k].title+'</div>';
+                            html +='                <!-- 新闻详情 -->';
+                            html +='                <div class="list-detail-box psa">';
+                            html +='                    <div class="news-pic psa thumb"><img src="'+list[k].thumb+'" /></div>';
+                            html +='                    <div class="news-tips inthreeline psa desc">'+list[k].desc+'</div>';
+                            html +='                    <div class="news-from psa">平证牛事通</div>';
+                            html +='                    <div class="news-reading psa num" style="display:none;">'+list[k].magazine_article_stats.click_num+'</div>';
+                            html +='                    <div class="news-share-button psa" style="overflow:hidden;"><img src="images/share-button.png" style="margin-left:-5px;"/></div>';
+                            html +='                </div>';
+                            html +='            </a>';
+                            html +='        </li>';
+                        }
+                        if(append==1){
+                            $("#thelist").html(html);
+
+                            $("#page_list_2_value").val(1);
+                            $('#pullUp').show();
+                            $("#loadoverdiv").remove();
+                        }else{
+                            $("#thelist").append(html);
+                        }
+
+                        //如果没有数据则提示加载完毕
+                        if($.isEmptyObject(list)){
+                            $('#pullUp').hide();
+
+                            if( document.getElementById("loadoverdiv") ) {}else{
+                                $('#pullUp').before('<div id="loadoverdiv">加载完毕..</div>');
+                            }
+                        }
+
+                        loadStop();
+                        myScroll.refresh();
+                        break;
+                    case 3:
+                        //var list =  eval("("+json.list+")") ;
+                        //$('#page4 .title').html(list[0].title);
+                        //$('#page4 .body').html( list[0].body );
+                        var list =  eval("("+json.list+")") ;
+                        if(!$.isEmptyObject(list)){
+                            var html = '<span class="news-from inaline">平证牛事通</span>';
+                            html +='<span class="news-title title">'+list[0].title+'</span>';
+                            html +='<span class="news-author">文/平证牛事通</span> ';
+                            html +='<div class="body">'+list[0].body+'</div>';
+                            $('#page4 .news-detail').html(html);
+                        }
+                        loadStop();
+                        myScroll.refresh();
+                        break;
+                    case 4:
+                        //var list =  eval("("+json.list+")") ;
+                        //$('#page5 .title').html(list[0].title);
+                        //$('#page5 .body').html( list[0].body )
+                        var list =  eval("("+json.list+")") ;
+                        if(!$.isEmptyObject(list)){
+                            if(list[0].gourl){
+                                window.location.href = list[0].gourl;
+                            }else{
+                                var html = '<span class="news-from inaline">平证牛事通</span>';
+                                html +='<span class="news-title title">'+list[0].title+'</span>';
+                                html +='<span class="news-author">文/平证牛事通</span> ';
+                                html +='<div class="body">'+list[0].body+'</div>';
+                                $('#page5 .news-detail').html(html);
+                            }
+
+                        }
+                        loadStop();
+                        myScroll.refresh();
+                        break;
+                }
+            }else{
+                alert('服务端繁忙..');
+            }
+        })
+    }
+
+    //获取文章内容
+    function getArticle(id){
+        loadStart('加载中...','a',true)
+        var url = 'http://192.168.13.191:8094/index.php/magazine/index/Article?id='+id+'&j=1';
+        $.get(url, function(json){
+
+            if(json.code==1){
+                var list =  eval("("+json.list+")") ;
+                var html = '<span class="news-from inaline">平证牛事通</span>';
+                html +='<span class="news-title inaline title">'+list.title+'</span>';
+                html +='<span class="news-author">文/平证牛事通</span> ';
+                html +='<div class="body">'+list.body+'</div>';
+                $('#page6 .news-detail').html(html);
+
+                loadStop();
+                myScroll.refresh();
+            }else{
+                alert('服务端繁忙..');
+            }
+
+        })
+
+    }
+
+    //更新文章点击，主要解决跳转列表文章的点击数
+    function updateArticleClikeNum(id){
+
+        var url = 'http://192.168.13.191:8094/index.php/magazine/index/ArticleClick?id='+id+'&j=1';
+        $.get(url, function(json){
+
+        })
+    }
+
+    /**
+     * 下拉刷新 （自定义实现此方法）
+     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction () {
+        setTimeout(function () {    // <-- Simulate network congestion, remove setTimeout from production!
+
+            /**
+             var el, li, i;
+             el = document.getElementById('thelist');
+
+             for (i=0; i<3; i++) {
+                    li = document.createElement('li');
+                    li.innerText = 'Generated row ' + (++generatedCount);
+                    el.insertBefore(li, el.childNodes[0]);
+                }**/
+                //目录2 精选
+            var id =$("#id_value").val();
+            $("#page3").attr("data-id",id);
+            var cid = 2;
+            getListSub(id,cid,1,1);
+
+            //重置页码
+            $("#page_list_2_value").val(1);
+            $('#pullUp').show();
+            $("#loadoverdiv").remove();
+
+            $('.nav-con').removeClass('active');
+            $('.nav-con2').addClass('active');
+
+            myScroll.refresh();
+            //数据加载完成后，调用界面更新方法   Remember to refresh when contents are loaded (ie: on ajax completion)
+        }, 1000);   // <-- Simulate network congestion, remove setTimeout from production!
+    }
+
+    /**
+     * 滚动翻页 （自定义实现此方法）
+     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法  上滑
+     */
+    function pullUpAction () {
+        setTimeout(function () {    // <-- Simulate network congestion, remove setTimeout from production!
+
+            /**
+             var el, li, i;
+             el = document.getElementById('thelist');
+
+             for (i=0; i<3; i++) {
+                    li = document.createElement('li');
+                    li.innerText = 'Generated row ' + (++generatedCount);
+                    el.appendChild(li, el.childNodes[0]);
+             }
+             **/
+            //目录2 精选
+            var id =$("#id_value").val();
+            $("#page3").attr("data-id",id);
+            var cid = 2;
+            var page = $("#page_list_2_value").val();
+            page = parseInt(page) + 1;
+            $("#page_list_2_value").val(page);
+
+            getListSub(id,cid,0,page);
+
+            myScroll.refresh();
+
+            // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+        }, 1000);   // <-- Simulate network congestion, remove setTimeout from production!
+    }
+
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');
+        pullUpOffset = pullUpEl.offsetHeight;
+        myScroll = new iScroll('wrapper', {
+            scrollbars: 'false', /* 重要样式 */
+            useTransition: false,
+            topOffset: pullDownOffset,
+            onRefresh: function () {
+                if (pullDownEl.className.match('loading')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                } else if (pullUpEl.className.match('loading')) {
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                }
+            },
+            onScrollMove: function () {
+                if (this.y > 5 && !pullDownEl.className.match('flip')) {
+                    pullDownEl.className = 'flip';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
+                    this.minScrollY = 0;
+                } else if (this.y < 5 && pullDownEl.className.match('flip')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                    this.minScrollY = -pullDownOffset;
+                } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+                    pullUpEl.className = 'flip';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
+                    this.maxScrollY = this.maxScrollY;
+                } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    this.maxScrollY = pullUpOffset;
+                }
+            },
+            onScrollEnd: function () {
+                if (pullDownEl.className.match('flip')) {
+                    pullDownEl.className = 'loading';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                    pullDownAction();   // Execute custom function (ajax call?)
+                } else if (pullUpEl.className.match('flip')) {
+                    pullUpEl.className = 'loading';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                    pullUpAction(); // Execute custom function (ajax call?)
+                }
+            }
+        });
+
+        setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+    }
+    //初始化绑定iScroll控件
+    document.addEventListener('DOMContentLoaded', loaded, false);
+
+
+    //打开loading组件
+    //text(string): 加载提示文字
+    //str(string): load的背景颜色样式(取值:a,b,c,d)
+    //flag(boolean): 背景是否透明(取值:true透明,false不透明)
+    function loadStart(text,str,flag){
+        if(!text){
+            text = "加载中...";
+        }
+        $(".ui-loader h1").html(text);
+        var _width = window.innerWidth;
+        var _height = window.innerHeight;
+        var htmlstr = '<div style="width:'+_width+'px;height:'+_height+'px;position:fixed;top:0px;left:0px;opacity:0.1;z-index:99999" class="loader-bg"></div>';
+        $("body").append(htmlstr);
+        if(flag){
+            $(".ui-loader").removeClass("ui-loader-verbose").addClass("ui-loader-default");
+        }
+        else{
+            $(".ui-loader").removeClass("ui-loader-default").addClass("ui-loader-verbose");
+        }
+        var cla = "ui-body-"+str;
+        $("html").addClass("ui-loading");
+        var arr = $(".ui-loader").attr("class").split(" ");
+        var reg = /ui-body-[a-f]/;
+        for(var i in arr){
+            if(reg.test(arr[i])){
+                $(".ui-loader").removeClass(arr[i]);
+            }
+        }
+        $(".ui-loader").addClass(cla);
+    }
+    //结束loading组件
+    function loadStop(){
+        $("html").removeClass("ui-loading");
+        $(".loader-bg").remove();
+    }
+
+    $(document).ready(function(){
+        //loadStop();
+        setTimeout(function(){
+            loadOver()
+        },100);
+    });
+
+</script>
+
+
+</body>
+</html>

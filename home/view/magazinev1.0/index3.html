@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    </head>
+    <body>
+    <div class="loader psa">
+        <div class="loader-inner ball-scale-multiple">
+            <div></div>
+            <div></div>
+            <div></div>
+            <span></span>
+        </div>
+    </div>
+    <style type="text/css">
+    .loader,.loader-inner {
+      left:100px;
+      top: 100px;
+      width: 2.1875rem;
+      height: 2.1875rem;
+    }
+
+    .magezine-new .loader span {
+      width: 0.4375rem;
+      height: 0.4375rem;
+      border-radius: 100%;
+      background: #FFF;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -0.206rem 0 0 -0.206rem;
+    }
+    .ball-scale-multiple div {
+      background-color: #ea5505;
+      width: 0.5625rem;
+      height: 0.5625rem;
+      border-radius: 100%;
+      margin: 2px;
+      animation: ball-scale-multiple 1s 1s linear infinite;
+      -webkit-animation: ball-scale-multiple 1s 1s linear infinite !important;
+      animation-fill-mode: both;
+      -webkit-animation-fill-mode: both;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      opacity: 1;
+      margin: 0;
+      width: 2.1875rem;
+      height: 2.1875rem;
+
+    }
+    .ball-scale-multiple {
+      position: relative;
+      -webkit-transform:translateY(-30px);
+         -moz-transform:translateY(-30px);
+          -ms-transform:translateY(-30px);
+           -o-transform:translateY(-30px);
+              transform:translateY(-30px);
+    }
+    .ball-scale-multiple div:nth-child(2) {
+      animation-delay: 0.2s;
+      -webkit-animation-delay: 0.2s;
+    }
+    .ball-scale-multiple div:nth-child(3) {
+      animation-delay: 0.4s;
+      -webkit-animation-delay: 0.4s;
+    }
+
+    @-webkit-keyframes ball-scale-multiple {
+      0% {
+        -webkit-transform:scale(0) ;
+           -moz-transform:scale(0) ;
+            -ms-transform:scale(0) ;
+             -o-transform:scale(0) ;
+                transform:scale(0) ;
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform:scale(1) ;
+           -moz-transform:scale(1) ;
+            -ms-transform:scale(1) ;
+             -o-transform:scale(1) ;
+                transform:scale(1) ;
+        opacity: 0;
+      }
+    }
+    @keyframes ball-scale-multiple {
+    0% {
+        -webkit-transform:scale(0) ;
+           -moz-transform:scale(0) ;
+            -ms-transform:scale(0) ;
+             -o-transform:scale(0) ;
+                transform:scale(0) ;
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform:scale(1) ;
+           -moz-transform:scale(1) ;
+            -ms-transform:scale(1) ;
+             -o-transform:scale(1) ;
+                transform:scale(1) ;
+        opacity: 0;
+      }
+    }
+    </style>
+    </body>
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+        <title>平证牛事通</title>
+        
+        <link rel="stylesheet" type="text/css" href="http://pznst.wmting.com/magazinev1.0/css/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" type="text/css" href="http://pznst.wmting.com/magazinev1.0/css/scrollbar.css" />
+        <link rel="stylesheet" type="text/css" href="http://pznst.wmting.com/magazinev1.0/css/style.css?v=23" />
+        <style type="text/css">
+    .loader,.loader-inner {
+      right:-0.2rem;
+      top: 1.3rem;
+      width: 2.1875rem;
+      height: 2.1875rem;
+    }
+
+    .magezine-new .loader span {
+      width: 0.4375rem;
+      height: 0.4375rem;
+      border-radius: 100%;
+      background: #FFF;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -0.206rem 0 0 -0.206rem;
+    }
+    .ball-scale-multiple div {
+      background-color: #ea5505;
+      width: 0.5625rem;
+      height: 0.5625rem;
+      border-radius: 100%;
+      margin: 2px;
+      animation: ballScaleMultiple 1s linear 1s infinite;
+      -webkit-animation: ballScaleMultiple 1s linear 1s infinite;
+      animation-fill-mode: both;
+      -webkit-animation-fill-mode: both;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      opacity: 1;
+      margin: 0;
+      width: 2.1875rem;
+      height: 2.1875rem;
+
+    }
+    .ball-scale-multiple {
+      position: relative;
+      -webkit-transform:translateY(-30px);
+         -moz-transform:translateY(-30px);
+          -ms-transform:translateY(-30px);
+           -o-transform:translateY(-30px);
+              transform:translateY(-30px);
+    }
+    .ball-scale-multiple div:nth-child(2) {
+      animation-delay: 0.2s;
+      -webkit-animation-delay: 0.2s;
+    }
+    .ball-scale-multiple div:nth-child(3) {
+      animation-delay: 0.4s;
+      -webkit-animation-delay: 0.4s;
+    }
+
+    @-webkit-keyframes ballScaleMultiple {
+      0% {
+        -webkit-transform:scale(0) ;
+           -moz-transform:scale(0) ;
+            -ms-transform:scale(0) ;
+             -o-transform:scale(0) ;
+                transform:scale(0) ;
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform:scale(1) ;
+           -moz-transform:scale(1) ;
+            -ms-transform:scale(1) ;
+             -o-transform:scale(1) ;
+                transform:scale(1) ;
+        opacity: 0;
+      }
+    }
+    @keyframes ballScaleMultiple {
+    0% {
+        -webkit-transform:scale(0) ;
+           -moz-transform:scale(0) ;
+            -ms-transform:scale(0) ;
+             -o-transform:scale(0) ;
+                transform:scale(0) ;
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform:scale(1) ;
+           -moz-transform:scale(1) ;
+            -ms-transform:scale(1) ;
+             -o-transform:scale(1) ;
+                transform:scale(1) ;
+        opacity: 0;
+      }
+    }
+    </style>
+        <script type="text/javascript" src="http://pznst.wmting.com/magazinev1.0/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="http://pznst.wmting.com/magazinev1.0/js/iscroll.js"></script>
+        <script type="text/javascript" src="http://pznst.wmting.com/magazinev1.0/js/jquery.mobile-1.4.5.min.js"></script>
+        <script>
+            $(function() {
+                setRem();
+                window.addEventListener('orientationchange', setRem);
+                window.addEventListener('resize', setRem);
+                function setRem() {
+                    var html = document.querySelector('html');
+                    var width = html.getBoundingClientRect().width;
+                    html.style.fontSize = width / 20 + 'px';
+                }
+                var navH = parseInt($('.magazine-nav').css('height'));
+                var ScreenH = parseInt($('body').css('height'))-navH;
+                $(".news-detail").attr('style', 'height:'+ScreenH+'px');
+                $('#page6 .body').attr('style', 'height:'+ScreenH+'px');
+            })
+        </script>
+         
+    </head>
+    <body>
+    <!-- 首页杂志栏 -->
+    <div class="magazine-index page1" id="page1" data-role="page" data-id="{$list[0]['id']}">
+        <div class="magazine-shelf-top psa"><img src="images/shelf.png" /></div>
+        <div class="magazine-shelf-bottom psa"><img src="images/shelf.png" /></div>
+       
+        <div class="magezine-con1 magezine-new psa">
+            <div class="loader psa" style="z-index:20;">
+                <div class="loader-inner ball-scale-multiple">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <span></span>
+                </div>
+            </div>
+            <a href="#page2" data-transition="flip">
+                <div class="book-cover psa"><img data="images/book.png" src="{$list[0]['thumb']}" /></div>
+                <div class="magazine-icon-new psa"><img src="images/magazine-icon-new.png" /></div>
+                
+            </a>
+        </div>
+        
+        <div class="index-flower psa"><img src="images/index-flower.png" /></div>
+        <div class="magezine-empty psa">
+            <div class="magazine-empty psa"><img src="images/cover-empty.png"  /></div>
+            <span class="magazine-empty-tips psa">敬请<br />期待</span>
+        </div>
+        <div class="index-robot psa"><img src="images/index-Robot.png" /></div>
+    </div>
+    <!-- 头条封面 -->
+    <div class="page2 wrapper" id="page2" data-role="page">        
+        <div class="magazine-cover-fullpage"><img data="images/Cover-fullpage.png" src="{$list[0]['thumb']}" /></div>
+        <div class="magazine-nav">
+            <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+            <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+            <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+            <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+        </div>
+        <div class="news-detail psa">
+            
+        </div>
+    </div>
+    <!-- 精选列表 -->
+    <div class="page3" id="page3" data-role="page">
+        <div class="magazine-nav">
+            <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+            <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+            <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+            <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+        </div>
+        <div id="wrapper" class="wrapper">
+            <div class="high-quality-news-container"  id="scroller">
+                <div id="pullDown">
+                    <span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+                </div>
+                <ul id="thelist">
+                </ul>
+                <div id="pullUp">
+                    <span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 知证 -->
+    <div class="page4" id="page4" data-role="page">
+        <div class="magazine-nav">
+            <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+            <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+            <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+            <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+        </div>
+        <div class="news-detail psa">
+   
+        </div>
+    </div>
+    <!-- 轻松 -->
+    <div class="page5" id="page5" data-role="page">
+        <div class="magazine-nav">
+            <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+            <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+            <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+            <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+        </div>
+        <div class="news-detail psa">
+
+        </div>
+    </div>
+    </body>
+    <!-- 精选文章点击详情 -->
+    <div class="page6" id="page6" data-role="page">
+        <div class="magazine-nav">
+            <div class="nav-con1 nav-con"><a href="#page2"><span class="nav-txt">头条</span></a></div>
+            <div class="nav-con2 nav-con"><a href="#page3"><span class="nav-txt">精选</span></a></div>
+            <div class="nav-con3 nav-con"><a href="#page4"><span class="nav-txt">知证</span></a></div>
+            <div class="nav-con4 nav-con"><a href="#page5"><span class="nav-txt">轻松</span></a></div>
+        </div>
+        <div class="news-detail psa">
+            
+        </div>
+    </div>
+
+    </body>
+    <script type="text/javascript">
+        var myScroll,
+            pullDownEl, pullDownOffset,
+            pullUpEl, pullUpOffset,
+            generatedCount = 0;
+        
+        $(document).on("pageinit","#page2",function(){
+            $('.nav-con').click(function(event) {
+                $('.nav-con').removeClass('active');
+                $(this).addClass('active')
+            });
+            $('.magazine-cover-fullpage').click(function(event) {
+                $(this).attr('style', 'display:none');
+            });
+        });
+        $(document).on("pageshow","#page2",function(){
+    
+      var id = $("#page1").attr("data-id");
+      $("#page2").attr("data-id",id);
+      var cid = 1;
+      getListSub(id,cid,0);
+
+            $('.nav-con').removeClass('active');
+            $('.nav-con1').addClass('active');
+
+
+        });
+        $(document).on("pageshow","#page3",function(){
+    
+          //目录2 精选
+      var id = $("#page1").attr("data-id");
+      $("#page3").attr("data-id",id);
+      var cid = 2;
+      getListSub(id,cid,1);
+      
+            $('.nav-con').removeClass('active');
+            $('.nav-con2').addClass('active');    
+            
+        });
+        $(document).on("pageshow","#page4",function(){
+          //目录3  知证
+      var id = $("#page1").attr("data-id");
+      $("#page4").attr("data-id",id);
+      var cid = 3;
+      getListSub(id,cid,0);
+      
+            $('.nav-con').removeClass('active');
+            $('.nav-con3').addClass('active');
+        });
+        $(document).on("pageshow","#page5",function(){
+          //目录4  轻松
+      var id = $("#page1").attr("data-id");
+      $("#page5").attr("data-id",id);
+      var cid = 4;
+      getListSub(id,cid,0);
+      
+            $('.nav-con').removeClass('active');
+            $('.nav-con4').addClass('active');
+        });
+        
+        $(document).on("pagebeforeshow","#page6",function(event,data){
+          //文章内容
+      //$('#page6 iframe').attr('src', 'https://mp.weixin.qq.com/s?__biz=MzI3NzU3MDk3OQ==&mid=100000494&idx=1&sn=542e98df973a60ab26dfa2898fa35dce&chksm=6b6576225c12ff3479cf0add42ab536f62ad845454a653e87a8a8859eaa417e9293ad41a5c0f&mpshare=1&scene=1&srcid=0331g3MvZKtPWq7giF4iAjwy&pass_ticket=ebLnXtm5W3RE4GDrukxoGdMvHh7ARy1pLhyn2kR%2B%2Fd8%3D#rd');
+      
+        });
+    //获取某分类期刊数据
+    function getIndexData(){
+        // loadStart('加载中...','a',true);
+        var url = 'http://pznst.wmting.com/magazine/index/lists?tid=3&j=1';
+        $.get(url, function(json){
+          var list =  eval("("+json.list+")") ;
+          if(json.code==1){
+            if( !list[0].thumb ){
+               list[0].thumb = 'images/book.png';
+            }
+            $("#page1 .book-cover").find("img").attr('src',list[0].thumb);
+            $("#page2 .magazine-cover-fullpage").find("img").attr('src',list[0].thumb);
+            $("#page1").attr("data-id",list[0].id);
+                       
+          }
+          //alert("Data: " + json);
+                    
+        });
+                
+    }
+        $(document).ready(function(){
+            //getIndexData();
+        });
+    //获取期刊内容列表
+    function getListSub(id,cid,append){
+      loadStart('加载中...','a',true)
+      if(cid==0){
+        cid = 1;
+      }
+       // onclick="getArticle('+list[k].id+')"
+      var url = 'http://pznst.wmting.com/magazine/index/listsub?id='+id+'&cid='+cid+'&j=1';
+      $.get(url, function(json){
+        if(json.code==1){
+          switch (cid) {
+            case 1:
+              //var list =  eval("("+json.list+")") ;
+              //$('#page2 .title').html(list[0].title);
+              //$('#page2 .body').html( list[0].body );
+              var list =  eval("("+json.list+")") ;
+              var html = '<span class="news-from inaline">平证牛事通</span>';
+                html +='<span class="news-title title">'+list[0].title+'</span>';
+                html +='<span class="news-author">文/平证牛事通</span> ';
+                html +='<div class="body">'+list[0].body+'</div>';
+              $('#page2 .news-detail').html(html);
+              loadStop();
+              myScroll.refresh();
+            break;
+            case 2:
+              var html = '';
+              var list =  eval("("+json.list+")") ;
+              for(var k in list){ 
+              
+                if(list[k].gourl!=''){
+                  var href = list[k].gourl;
+                  var clickstr = 'target="_blank" onclick="updateArticleClikeNum('+list[k].id+')"';
+                }else{
+                  var href ='#page6';
+                  var clickstr = 'onclick="getArticle('+list[k].id+');"';
+                }
+                var datearr = list[k].date.split("/");
+                  html +='        <li class="news-box">';
+                  html +='            <a href="'+href+'" '+clickstr+' data-aid="'+list[k].id+'">';
+                  html +='                <!-- 新闻事件 -->';
+                  html +='                <div class="news-date psa">';
+                  html +='                    <span class="news-date-month">'+datearr[0]+'</span>';
+                  html +='                    <span class="news-date-day">'+datearr[1]+'</span>';
+                  html +='                </div>';
+                  html +='                <div class="news-title inaline title">'+list[k].title+'</div>';
+                  html +='                <!-- 新闻详情 -->';
+                  html +='                <div class="list-detail-box psa">';
+                  html +='                    <div class="news-pic psa thumb"><img src="'+list[k].thumb+'" /></div>';
+                  html +='                    <div class="news-tips inthreeline psa desc">'+list[k].desc+'</div>';
+                  html +='                    <div class="news-from psa">平证牛事通</div>';
+                  html +='                    <div class="news-reading psa num">'+list[k].magazine_article_stats.click_num+'</div>';
+                  html +='                    <div class="news-share-button psa"><img src="images/share-button.png" /></div>';
+                  html +='                </div>';
+                  html +='            </a>';
+                  html +='        </li>';
+              }
+              if(append==1){
+                $("#thelist").html(html);
+              }else{
+                $("#thelist").append(html);
+              }
+              
+              loadStop();
+              myScroll.refresh();
+            break;
+            case 3:
+              //var list =  eval("("+json.list+")") ;
+              //$('#page4 .title').html(list[0].title);
+              //$('#page4 .body').html( list[0].body );
+              var list =  eval("("+json.list+")") ;
+              var html = '<span class="news-from inaline">平证牛事通</span>';
+                html +='<span class="news-title title">'+list[0].title+'</span>';
+                html +='<span class="news-author">文/平证牛事通</span> ';
+                html +='<div class="body">'+list[0].body+'</div>';
+              $('#page4 .news-detail').html(html);
+              loadStop();
+              myScroll.refresh();
+            break;
+            case 4:
+              //var list =  eval("("+json.list+")") ;
+              //$('#page5 .title').html(list[0].title);
+              //$('#page5 .body').html( list[0].body )
+              var list =  eval("("+json.list+")") ;
+              if(list[0].gourl){
+                window.location.href = list[0].gourl;
+              }else{
+              var html = '<span class="news-from inaline">平证牛事通</span>';
+                html +='<span class="news-title title">'+list[0].title+'</span>';
+                html +='<span class="news-author">文/平证牛事通</span> ';
+                html +='<div class="body">'+list[0].body+'</div>';
+              $('#page5 .news-detail').html(html);
+              loadStop();
+              myScroll.refresh();
+              }
+              
+            break;
+          }
+        }else{
+          alert('服务端繁忙..');
+        }
+      })
+    }
+    
+    //获取文章内容
+    function getArticle(id){
+      loadStart('加载中...','a',true)
+      var url = 'http://pznst.wmting.com/magazine/index/Article?id='+id+'&j=1';
+      $.get(url, function(json){
+        
+        if(json.code==1){
+          var list =  eval("("+json.list+")") ;
+          var html = '<span class="news-from inaline">平证牛事通</span>';
+            html +='<span class="news-title inaline title">'+list.title+'</span>';
+            html +='<span class="news-author">文/平证牛事通</span> ';
+            html +='<div class="body">'+list.body+'</div>';
+          $('#page6 .news-detail').html(html);
+
+          loadStop();
+          myScroll.refresh();
+        }else{
+          alert('服务端繁忙..');
+        }
+
+        
+      })
+
+    }
+    
+    //更新文章点击，主要解决跳转列表文章的点击数
+    function updateArticleClikeNum(id){
+      
+      var url = 'http://pznst.wmting.com/magazine/index/ArticleClick?id='+id+'&j=1';
+      $.get(url, function(json){
+        
+      })
+    }
+    
+        /**
+         * 下拉刷新 （自定义实现此方法）
+         * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
+         */
+        function pullDownAction () {
+            setTimeout(function () {    // <-- Simulate network congestion, remove setTimeout from production!
+               
+              /**
+              var el, li, i;
+                el = document.getElementById('thelist');
+
+                for (i=0; i<3; i++) {
+                    li = document.createElement('li');
+                    li.innerText = 'Generated row ' + (++generatedCount);
+                    el.insertBefore(li, el.childNodes[0]);
+                }**/
+              //目录2 精选
+          var id = $("#page1").attr("data-id");
+          $("#page3").attr("data-id",id);
+          var cid = 2;
+          getListSub(id,cid,1);
+          
+                $('.nav-con').removeClass('active');
+                $('.nav-con2').addClass('active');
+                
+                myScroll.refresh();
+                //数据加载完成后，调用界面更新方法   Remember to refresh when contents are loaded (ie: on ajax completion)
+            }, 1000);   // <-- Simulate network congestion, remove setTimeout from production!
+        }
+
+        /**
+         * 滚动翻页 （自定义实现此方法）
+         * myScroll.refresh();      // 数据加载完成后，调用界面更新方法  上滑
+         */
+        function pullUpAction () {
+            setTimeout(function () {    // <-- Simulate network congestion, remove setTimeout from production!
+      
+        /**
+                var el, li, i;
+                el = document.getElementById('thelist');
+
+                for (i=0; i<3; i++) {
+                    li = document.createElement('li');
+                    li.innerText = 'Generated row ' + (++generatedCount);
+                    el.appendChild(li, el.childNodes[0]);
+                }
+                **/
+                $('#pullUp .pullUpLabel').html('加载完毕..');
+                myScroll.refresh();
+                 // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+            }, 1000);   // <-- Simulate network congestion, remove setTimeout from production!
+        }
+
+        /**
+         * 初始化iScroll控件
+         */
+        function loaded() {
+            pullDownEl = document.getElementById('pullDown');
+            pullDownOffset = pullDownEl.offsetHeight;
+            pullUpEl = document.getElementById('pullUp');   
+            pullUpOffset = pullUpEl.offsetHeight;
+            myScroll = new iScroll('wrapper', {
+                scrollbars: 'false', /* 重要样式 */
+                useTransition: false,
+                topOffset: pullDownOffset,
+                onRefresh: function () {
+                    if (pullDownEl.className.match('loading')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                    } else if (pullUpEl.className.match('loading')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                },
+                onScrollMove: function () {
+                    if (this.y > 5 && !pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'flip';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
+                        this.minScrollY = 0;
+                    } else if (this.y < 5 && pullDownEl.className.match('flip')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                        this.minScrollY = -pullDownOffset;
+                    } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'flip';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
+                        this.maxScrollY = this.maxScrollY;
+                    } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                        this.maxScrollY = pullUpOffset;
+                    }
+                },
+                onScrollEnd: function () {
+                    if (pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'loading';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';                
+                        pullDownAction();   // Execute custom function (ajax call?)
+                    } else if (pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'loading';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';                
+                        pullUpAction(); // Execute custom function (ajax call?)
+                    }
+                }
+            });
+            
+            setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+        }
+        //初始化绑定iScroll控件 
+        document.addEventListener('DOMContentLoaded', loaded, false); 
+        
+    
+        
+        
+        //打开loading组件
+        //text(string): 加载提示文字
+        //str(string): load的背景颜色样式(取值:a,b,c,d)
+        //flag(boolean): 背景是否透明(取值:true透明,false不透明)
+        function loadStart(text,str,flag){
+            if(!text){
+                text = "加载中...";
+            }
+            $(".ui-loader h1").html(text);
+            var _width = window.innerWidth;
+            var _height = window.innerHeight;
+            var htmlstr = '<div style="width:'+_width+'px;height:'+_height+'px;position:fixed;top:0px;left:0px;opacity:0.1;z-index:99999" class="loader-bg"></div>';
+            $("body").append(htmlstr);
+            if(flag){
+                $(".ui-loader").removeClass("ui-loader-verbose").addClass("ui-loader-default");
+            }
+            else{
+                $(".ui-loader").removeClass("ui-loader-default").addClass("ui-loader-verbose");
+            }
+            var cla = "ui-body-"+str;
+            $("html").addClass("ui-loading");
+            var arr = $(".ui-loader").attr("class").split(" ");
+            var reg = /ui-body-[a-f]/;
+            for(var i in arr){
+                if(reg.test(arr[i])){
+                    $(".ui-loader").removeClass(arr[i]);
+                }
+            }
+            $(".ui-loader").addClass(cla);
+        }
+        //结束loading组件
+        function loadStop(){
+            $("html").removeClass("ui-loading");
+            $(".loader-bg").remove();
+        }
+       
+
+</script>
+{include file="/home/wwwroot/pingzhengniushitong/vendor/ming123jew/magazine/home/view/magazinev1.0/sharecode.html"}
+</html>

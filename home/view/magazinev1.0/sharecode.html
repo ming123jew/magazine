@@ -1,0 +1,161 @@
+<script>
+  	var _mtac = {"performanceMonitor":1,"senseQuery":1};
+  	(function() {
+  		var mta = document.createElement("script");
+  		mta.src = "http://pingjs.qq.com/h5/stats.js?v2.0.4";
+  		mta.setAttribute("name", "MTAH5");
+  		mta.setAttribute("sid", "500436657");
+  		mta.setAttribute("cid", "500436660");
+  		var s = document.getElementsByTagName("script")[0];
+  		s.parentNode.insertBefore(mta, s);
+  	})();
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+    debug: false,
+    appId: "{$signPackage["appId"]}",
+    timestamp: {$signPackage["timestamp"]},
+    nonceStr: "{$signPackage["nonceStr"]}",
+    signature: "{$signPackage["signature"]}",
+    jsApiList: [
+      'checkJsApi',
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'hideMenuItems',
+      'showMenuItems',
+      'hideAllNonBaseMenuItem',
+      'showAllNonBaseMenuItem',
+      'translateVoice',
+      'startRecord',
+      'stopRecord',
+      'onRecordEnd',
+      'playVoice',
+      'pauseVoice',
+      'stopVoice',
+      'uploadVoice',
+      'downloadVoice',
+      'chooseImage',
+      'previewImage',
+      'uploadImage',
+      'downloadImage',
+      'getNetworkType',
+      'openLocation',
+      'getLocation',
+      'hideOptionMenu',
+      'showOptionMenu',
+      'closeWindow',
+      'scanQRCode',
+      'chooseWXPay',
+      'openProductSpecificView',
+      'addCard',
+      'chooseCard',
+      'openCard'
+    ]
+});
+var imgUrl = "{$signPackage["share_thumb"]}";
+var lineLink = "{$signPackage["share_url"]}";
+var descContent = "{$signPackage["share_desc"]}";
+var shareTitle = "{$signPackage["share_title"]}";
+
+wx.ready(function(){
+	//显示右上角菜单接口
+	wx.showOptionMenu();
+	
+	//分享到朋友圈
+	wx.onMenuShareTimeline({
+	    title: shareTitle, // 分享标题
+	    link: lineLink+'?CKTAG=mta_share.wechat_moments', // 分享链接
+	    imgUrl: imgUrl, // 分享图标
+	    success: function () { 
+	        // 用户确认分享后执行的回调函数
+	        MtaH5.clickShare('wechat_moments');  //这里加上h5分享代码
+	        //share('wechat_moments');
+	    },
+	    cancel: function () { 
+	        // 用户取消分享后执行的回调函数
+	    }
+	});
+
+	//分享到朋友
+	wx.onMenuShareAppMessage({
+	    title: shareTitle, // 分享标题
+	    desc: descContent, // 分享描述
+	    link: lineLink+'?CKTAG=mta_share.wechat_friend', // 分享链接
+	    imgUrl: imgUrl, // 分享图标
+	    type: '', // 分享类型,music、video或link，不填默认为link
+	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    success: function () { 
+	        // 用户确认分享后执行的回调函数
+	        MtaH5.clickShare('wechat_friend');  //这里加上h5分享代码
+	        //share('wechat_friend');
+	    },
+	    cancel: function () { 
+	        // 用户取消分享后执行的回调函数
+	    }
+	});
+	
+	//分享到qq
+	wx.onMenuShareQQ({
+	    title: shareTitle, // 分享标题
+	    desc: descContent, // 分享描述
+	    link: lineLink+'?CKTAG=mta_share.qq', // 分享链接
+	    imgUrl: imgUrl, // 分享图标
+	    success: function () { 
+	       // 用户确认分享后执行的回调函数
+	       MtaH5.clickShare('qq');  //这里加上h5分享代码
+	       //share('qq');
+	    },
+	    cancel: function () { 
+	       // 用户取消分享后执行的回调函数
+	    }
+	});
+	
+	//分享到微博
+	wx.onMenuShareWeibo({
+	    title: shareTitle, // 分享标题
+	    desc: descContent, // 分享描述
+	    link: lineLink+'?CKTAG=mta_share.sina', // 分享链接
+	    imgUrl: imgUrl, // 分享图标
+	    type: '', // 分享类型,music、video或link，不填默认为link
+	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    success: function () { 
+	        // 用户确认分享后执行的回调函数
+	        MtaH5.clickShare('sina');  //这里加上h5分享代码
+	        //share('sina');
+	    },
+	    cancel: function () { 
+	        // 用户取消分享后执行的回调函数
+	    }
+	});
+	
+	//分享到微博
+	wx.onMenuShareQZone({
+	    title: shareTitle, // 分享标题
+	    desc: descContent, // 分享描述
+	    link: lineLink+'?CKTAG=mta_share.qzone', // 分享链接
+	    imgUrl: imgUrl, // 分享图标
+	    type: '', // 分享类型,music、video或link，不填默认为link
+	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    success: function () { 
+	        // 用户确认分享后执行的回调函数
+	        MtaH5.clickShare('qzone');  //这里加上h5分享代码
+	        //share('qzone');
+	    },
+	    cancel: function () { 
+	        // 用户取消分享后执行的回调函数
+	    }
+	});
+})
+
+wx.error(function(res){
+	
+})
+
+
+
+</script>
+
+

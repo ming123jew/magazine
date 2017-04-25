@@ -1,0 +1,19 @@
+{
+    "name": "ming123jew/magazine",
+    "description": "The ThinkPHP5 phpexcel Package.",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "ming123jew",
+            "email": "799871365@qq.com"
+        }
+    ],
+    "require": {
+    	"php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "magazine\\": ""
+        }
+    }
+}
